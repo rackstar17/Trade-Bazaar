@@ -1,0 +1,14 @@
+.heading_class {
+    margin: 0 auto;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.stock_search {
+    margin-top: 50px;
+}
+
+.search-stock {
+    margin: 0 auto;
+    width: 150px;
+}
