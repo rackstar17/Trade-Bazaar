@@ -14,6 +14,14 @@ module.exports = function(app,express) {
                 res.json(stocks);
             });
         });
+
+        api.post('/stockpost', function(req,res) {
+            stocks_collection.find({"stockName": req.body.stockName}).toArray(function(err,stock) {
+             if(err) throw err;
+             res.json(stock);
+             });
+        });
+
     });
     return api;
 };

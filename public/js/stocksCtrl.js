@@ -2,6 +2,12 @@ var stocks = angular.module('indianStocks',[])
 
 stocks.controller('stockController' , function($scope,$http,$rootScope) {
 
+    $rootScope.receivedStock = {
+        stockName: "" ,
+        stockBSECode: "",
+        stockNSECode: ""
+    };
+
     $scope.init = function() {
         console.log('angular works');
         $http({
@@ -13,7 +19,7 @@ stocks.controller('stockController' , function($scope,$http,$rootScope) {
             $rootScope.stocksLength = $rootScope.stocks.length;
 
         }, function errorCallback(response) {
-            console.log('sorry ! get request failed');
+            console.log('sorry ! stockget request failed');
         })
     }
 
@@ -46,6 +52,25 @@ stocks.controller('stockController' , function($scope,$http,$rootScope) {
     $rootScope.assignValueAndHide = function(index) {
         $scope.searchText = $rootScope.suggestions[index];
         $rootScope.suggestions = [];
+    }
+
+    $scope.getStocksInfo = function() {
+        console.log('you searched for ' + $scope.searchText);
+        $http({
+            method: 'POST' ,
+            url: '/api/stockpost' ,
+            data: {stockName: $scope.searchText}
+        }).then(function successCallback(response) {
+
+            $rootScope.receivedStock= response.data;
+            console.log($rootScope.receivedStock);
+
+        }, function errorCallback(response) {
+
+            console.log('stockpost not working');
+
+        })
+
     }
 
 });
