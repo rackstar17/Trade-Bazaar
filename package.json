@@ -1,0 +1,27 @@
+{
+  "name": "IndianStocks",
+  "version": "0.0.0",
+  "description": "Trade bazaar is an html5 mobile app which lets you see the stocks details and make an easy to handle portfolio and much more",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rackstar17/Trade-Bazaar.git"
+  },
+  "author": "Himanshu Aggarwal",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rackstar17/Trade-Bazaar/issues"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "cheerio": "^0.19.0",
+    "express": "^4.13.3",
+    "mongodb": "^2.0.48",
+    "morgan": "^1.6.1",
+    "request": "^2.65.0"
+  }
+}

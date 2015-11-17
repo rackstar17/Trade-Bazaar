@@ -65,12 +65,39 @@ stocks.controller('stockController' , function($scope,$http,$rootScope) {
             $rootScope.receivedStock= response.data;
             console.log($rootScope.receivedStock);
 
+            $scope.getStockInfoFromGoogle(); // calling the google finance api to get the searched stock details
+
         }, function errorCallback(response) {
 
-            console.log('stockpost not working');
+            console.log('sorry ! stockpost not working');
 
         })
+    }
 
+    $scope.getStockInfoFromGoogle = function() {
+
+        var googleFinanceUrl = 'http://www.google.com/finance/info?client=ig&q=';
+        var stockSearchedTickerSymbol;
+
+        if($rootScope.receivedStock[0].stockNSECode !== '') {
+            stockSearchedTickerSymbol = $rootScope.receivedStock[0].stockNSECode;
+        }
+        else {
+            stockSearchedTickerSymbol = $rootScope.receivedStock[0].stockBSECode;
+        }
+
+        //console.log(stockSearchedTickerSymbol);
+
+        $http({
+            method: 'GET' ,
+            url: googleFinanceUrl + stockSearchedTickerSymbol
+        }).then(function successCallback(response) {
+
+            console.log(response);
+
+        }, function errorCallback(response) {
+            console.log('sorry ! google finance api failed');
+        })
     }
 
 });
