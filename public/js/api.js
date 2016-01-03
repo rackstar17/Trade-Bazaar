@@ -7,6 +7,7 @@ module.exports = function(app,express) {
         console.log('connected to the database');
 
         var stocks_collection = db.collection('stocks');
+        var userPortfolio = db.collection('portfolio');
 
         api.get('/stockget', function(req,res) {
             stocks_collection.find().toArray(function(err,stocks) {
@@ -20,6 +21,19 @@ module.exports = function(app,express) {
              if(err) throw err;
              res.json(stock);
              });
+        });
+
+        api.post('/addStockToPortfolio', function(req,res) {
+            userPortfolio.insert({stockName:req.body.stockName, stockBSECode:req.body.stockBSECode, stockNSECode:req.body.stockNSECode, quantity:req.body.quantity}, function() {
+                console.log('stock inserted in the portfolio');
+            });
+        });
+
+        api.get('/getPortfolio', function(req,res) {
+            userPortfolio.find().toArray(function(err,portfolioStocks) {
+                if(err) throw err;
+                res.json(portfolioStocks);
+            });
         });
 
     });

@@ -56,6 +56,7 @@ stocks.controller('stockController' , function($scope,$http,$rootScope) {
 
     $scope.getStocksInfo = function() {
         console.log('you searched for ' + $scope.searchText);
+        $rootScope.stockTitle = $scope.searchText;
         $http({
             method: 'POST' ,
             url: '/api/stockpost' ,
@@ -64,6 +65,8 @@ stocks.controller('stockController' , function($scope,$http,$rootScope) {
 
             $rootScope.receivedStock= response.data;
             console.log($rootScope.receivedStock);
+
+            $scope.searchText = "";
 
             $scope.getStockInfoFromGoogle(); // calling the google finance api to get the searched stock details
 
@@ -93,11 +96,24 @@ stocks.controller('stockController' , function($scope,$http,$rootScope) {
             url: googleFinanceUrl + stockSearchedTickerSymbol
         }).then(function successCallback(response) {
 
-            console.log(response);
+            $rootScope.stockResponse = response.data;
+            $rootScope.stockClickedArray = JSON.parse($rootScope.stockResponse.substr(4,$rootScope.stockResponse.length));
+            $rootScope.stockClicked = $rootScope.stockClickedArray[0];
+            console.log($rootScope.stockClicked);
+            $scope.searchBoolean = true;
 
         }, function errorCallback(response) {
             console.log('sorry ! google finance api failed');
+            $scope.searchBoolean = false;
         })
+    }
+
+    $scope.showList = function() {
+
+        if($scope.searchBoolean) {
+            return true;
+        }
+        return false;
     }
 
 });

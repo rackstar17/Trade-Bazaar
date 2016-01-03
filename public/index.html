@@ -57,9 +57,9 @@
                 <!-- Scrollable page content -->
                 <div class="page-content">
 
-                    <div class="tabs">
+                    <div class="tabs" ng-controller="stockController" ng-init="init()">
 
-                        <div class="tab active" id="tab1" ng-controller="stockController" ng-init="init()">
+                        <div class="tab active" id="tab1">
                             <!-- this tab loads up stocks_search.html -->
                             <div class="list-block">
                                 <div class="item-content">
@@ -85,10 +85,63 @@
                                 <a href="#" class="button button-raised button-fill color-red button-big" style="width: 150px; margin: 0 auto;" ng-click="getStocksInfo()">Search</a>
                             </p>
 
+                            <div class="list-block" ng-if="showList()">
+                                <ul>
+                                    <li class="item-content">
+                                        <div class="item-media"><h3>{{ stockTitle }}</h3></div>
+                                        <div class="item-inner">
+                                            <div class="item-title" style="padding-left: 20%;">{{ stockClicked.l_cur }}</div>
+                                            <div class="item-after">{{ stockClicked.c }}</div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
                         </div>
 
                         <div class="tab" id="tab2">
                             <!-- this tab loads up portfolio.html -->
+                            <div class="list-block">
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="text" name="stocks" placeholder="Enter Stock Name" ng-model="searchText" ng-change="search()">
+                                        </div>
+                                        <ul>
+                                            <li>
+                                                <div class="item-content" ng-repeat="suggestion in suggestions track by $index" ng-click="assignValueAndHide($index)">
+                                                    <div class="item-inner">
+                                                        <a href="#" style="margin: 0 auto;"> {{ suggestion }} </a>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- below is the input for amount of stocks bought -->
+                            <div class="list-block">
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="text" name="quantity" placeholder="Enter the amount of shares bought" ng-model="stockQuantity">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- below is the date of stocks bought -->
+                            <div class="list-block">
+                                <div class="item-content">
+                                    <div class="item-inner">
+                                        <div class="item-input">
+                                            <input type="date" name="date" placeholder="Enter the date when shares were bought" ng-model="stockDate">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="tab" id="tab3">
